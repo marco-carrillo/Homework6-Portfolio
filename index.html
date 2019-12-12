@@ -28,7 +28,6 @@
      <!-- JQuery confirm -->
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
-     <script src="assets/js/script.js"></script>
         
 </head>
 
@@ -37,13 +36,13 @@
     <!--  Main functionality, tabs-->
     <!--*************************************************************-->
 
-    <div class="container mx-2">  <!-- Main wrapper -->
+    <div class="container container-wrapper">  <!-- Main wrapper -->
 
           <!--************************************************-->
           <!--Top row contains the title of the application   -->
           <!--************************************************-->
 
-          <div class="row bg-dark color-light text-light">
+          <div class="row bg-primary color-light text-light">
                <div class="col-sm-12 text-center">
                     <h1>Weather Dashboard</h1>
                </div>
@@ -56,19 +55,24 @@
           <!-- The second column will not be split, and will contain the tabs for displaying results                  -->
           <!--*******************************************************************************************************-->
 
-          <div class="row">
-               <div class="col-sm-4">  <!-- This column will be divided into two rows-->
+          <div class="row mt-3">
+               <div class="col-sm-4">  <!-- This column will be divided into two three rows:  1) title, 2) search 3) results-->
                     <div class="row">
                          <h6>Search for a City:</h6>
                     </div>
 
-
                     <!-- The following asks the user for the city it wants to enter-->
-                    <div class="row">
-                         <div class="form-inline">
-                              <input type="text" class="form-control" id="inputCity">
-                              <button type="submit" class="btn btn-primary"><i class="fas fa-search-plus"></i></button>
+                    <div class="row mr-1">
+                         <div class="input-group">
+                              <input type="text" class="form-control mr-1" id="search-city" placeholder="Your location (City, State, ZIP)">
+                              <span class="input-group-btn">
+                              <button id="search-city-btn" class="btn btn-primary" type="submit"><i class="fas fa-search-plus"></i></button>
                          </div>
+                    </div>
+
+                    <div class="row row-divider"></div>  <!--just for space distribution purposes-->
+
+                    <div class="row mr-1" id="past-searches">
                     </div>
 
                </div>  <!--end of row 2, column 1-->
@@ -83,7 +87,7 @@
                          </ul>
 
                          <div id="fragment-1">
-                              <p>Today forecast is XYZ</p>
+                              <p>Today's forecast is XYZ</p>
                          </div>
                          <div id="fragment-2">
                               <p>10-day forecast looks great</p>
@@ -97,10 +101,8 @@
                </div>  <!-- End of row 2-->
      </div>  <!-- main wrapper-->
 
- 
-    <script>
-         $( "#tabs" ).tabs();
-    </script>
+     <script>$( "#tabs" ).tabs()</script>
+     <script src="assets/js/script.js"></script>
 
 
 </body>

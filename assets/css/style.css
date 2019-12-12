@@ -1,1 +1,11 @@
 /* File to hold styling for the weather application */
+
+.row-divider{
+    height: 20px;
+}
+
+.search-result{
+    padding:10px;
+    height:40px;
+
+}
