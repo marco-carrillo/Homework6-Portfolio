@@ -9,3 +9,34 @@
     height:40px;
 
 }
+
+.#MyChart{
+    width: 400px;
+    height: 400px;
+}
+
+.card{
+    width: 8rem;
+}
+
+.card-title{
+    font-size:12px;
+    font-weight: bold;
+}
+
+.card-text{
+    font-size:10px;
+}
+
+.main-icon{
+    width:40px;
+}
+
+.card-img-top {
+    width:60px;
+    align-self: center;
+}
+
+.weather-items {
+    font-size:15px;
+}

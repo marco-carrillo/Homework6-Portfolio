@@ -28,7 +28,10 @@
      <!-- JQuery confirm -->
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
-        
+     <!--Charts-->
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.js"></script>        
+     <!--MomentJS-->
+     <script src="assets/js/moment.js"></script>        
 </head>
 
 <body>
@@ -64,7 +67,7 @@
                     <!-- The following asks the user for the city it wants to enter-->
                     <div class="row mr-1">
                          <div class="input-group">
-                              <input type="text" class="form-control mr-1" id="search-city" placeholder="Your location (City, State, ZIP)">
+                              <input type="text" class="form-control mr-1" id="search-city" placeholder="Your location (City)">
                               <span class="input-group-btn">
                               <button id="search-city-btn" class="btn btn-primary" type="submit"><i class="fas fa-search-plus"></i></button>
                          </div>
@@ -80,14 +83,90 @@
                <div class="col-sm-8" id="tabs">
                     <!-- <div id="tabs"> -->
                          <ul>
-                              <li><a href="#fragment-1"><span>Today</span></a></li>
+                              <li><a href="#fragment-1"><span>Weather</span></a></li>
                               <li><a href="#fragment-2"><span>Forecast</span></a></li>
                               <li><a href="#fragment-3"><span>Geolocation</span></a></li>
 
                          </ul>
 
                          <div id="fragment-1">
-                              <p>Today's forecast is XYZ</p>
+                              <div class="row">  <!-- Header-->
+                                   <div class="col-8">
+                                        <p id="today-header">Richmond</p>
+                                   </div>
+
+                                   <div id="weather-icon" class="col-2">
+                                   </div>
+                              </div>
+                              
+                              <p id="today-temp" class="my-0 weather-items">Current temperature:</p>
+                              <p id="today-humidity" class="my-0 weather-items">Current humidity:</p>
+                              <p id="today-windspeed" class="my-0 weather-items">Current windspeed:</p>
+                              <p id="today-UVindex" class="my-0 weather-items">UV index:</p>
+                              <p></p>
+
+                              <!--Following containers for the 5-day forecasting-->
+
+                              <div class="row">  <!--Container for the 5-day forecast-->
+
+                                   <div class="col-sm-2 mx-1">
+                                        <div class="card">
+                                             <img id="icon1" src="" class="card-img-top" alt="img here">
+                                             <div class="card-body">
+                                                 <h6 id="date1" class="card-title"></h6>
+                                                 <h6 id="temp1" class="card-text"></h6>
+                                                 <h6 id="humd1" class="card-text"></h6>
+                                             </div>
+                                        </div>
+                                   </div>  <!--column ends here-->
+
+                                   <div class="col-sm-2 mx-1">
+                                        <div class="card">
+                                             <img id="icon2" src="" class="card-img-top" alt="img here">
+                                             <div class="card-body">
+                                                 <h6 id="date2" class="card-title"></h6>
+                                                 <h6 id="temp2" class="card-text"></h6>
+                                                 <h6 id="humd2" class="card-text"></h6>
+                                             </div>
+                                        </div>
+                                   </div>  <!--column ends here-->
+
+                                   <div class="col-sm-2 mx-1">
+                                        <div class="card">
+                                             <img id="icon3" src="" class="card-img-top" alt="img here">
+                                             <div class="card-body">
+                                                 <h6 id="date3" class="card-title"></h6>
+                                                 <h6 id="temp3" class="card-text"></h6>
+                                                 <h6 id="humd3" class="card-text"></h6>
+                                             </div>
+                                        </div>
+                                   </div>  <!--column ends here-->
+
+                                   <div class="col-sm-2 mx-1">
+                                        <div class="card">
+                                             <img id="icon4" src="" class="card-img-top" alt="img here">
+                                             <div class="card-body">
+                                                 <h6 id="date4" class="card-title"></h6>
+                                                 <h6 id="temp4" class="card-text"></h6>
+                                                 <h6 id="humd4" class="card-text"></h6>
+                                             </div>
+                                        </div>
+                                   </div>  <!--column ends here-->
+
+                                   <div class="col-sm-2 mx-1">
+                                        <div class="card">
+                                             <img id="icon5" src="" class="card-img-top" alt="img here">
+                                             <div class="card-body">
+                                                 <h6 id="date5" class="card-title"></h6>
+                                                 <h6 id="temp5" class="card-text"></h6>
+                                                 <h6 id="humd5" class="card-text"></h6>
+                                             </div>
+                                        </div>
+                                   </div>  <!--column ends here-->
+
+                              </div>  <!-- 5 day forecast ends here-->
+                              <!--containers for 5-day forecasting ends here-->
+
                          </div>
                          <div id="fragment-2">
                               <p>10-day forecast looks great</p>
@@ -103,7 +182,6 @@
 
      <script>$( "#tabs" ).tabs()</script>
      <script src="assets/js/script.js"></script>
-
 
 </body>
 </html>
