@@ -1,3 +1,4 @@
+
 <!--***********************************************-->
 <!-- This program generates a weather application  -->
 <!--***********************************************-->
@@ -28,10 +29,12 @@
      <!-- JQuery confirm -->
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
-     <!--Charts-->
+     <!--Chartsjs.org-->
      <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.js"></script>        
      <!--MomentJS-->
-     <script src="assets/js/moment.js"></script>        
+     <script src="assets/js/moment.js"></script>
+     <!--Google maps-->
+     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBZTex9Yvq35ct_1tG-ftXJvG5KhxfKnI0"></script>
 </head>
 
 <body>
@@ -67,7 +70,7 @@
                     <!-- The following asks the user for the city it wants to enter-->
                     <div class="row mr-1">
                          <div class="input-group">
-                              <input type="text" class="form-control mr-1" id="search-city" placeholder="Your location (City)">
+                              <input type="text" class="form-control mr-1" id="search-city" placeholder="Your location (City or City/Country)">
                               <span class="input-group-btn">
                               <button id="search-city-btn" class="btn btn-primary" type="submit"><i class="fas fa-search-plus"></i></button>
                          </div>
@@ -84,21 +87,14 @@
                     <!-- <div id="tabs"> -->
                          <ul>
                               <li><a href="#fragment-1"><span>Weather</span></a></li>
-                              <li><a href="#fragment-2"><span>Forecast</span></a></li>
-                              <li><a href="#fragment-3"><span>Geolocation</span></a></li>
-
+                              <li><a href="#fragment-2"><span>Geolocation</span></a></li>
                          </ul>
 
                          <div id="fragment-1">
-                              <div class="row">  <!-- Header-->
-                                   <div class="col-8">
-                                        <p id="today-header">Richmond</p>
+                                   <div id="weather-icon" class="row align-items-center">
+                                        <p id="today-header">City:</p>
                                    </div>
-
-                                   <div id="weather-icon" class="col-2">
-                                   </div>
-                              </div>
-                              
+                            
                               <p id="today-temp" class="my-0 weather-items">Current temperature:</p>
                               <p id="today-humidity" class="my-0 weather-items">Current humidity:</p>
                               <p id="today-windspeed" class="my-0 weather-items">Current windspeed:</p>
@@ -169,11 +165,14 @@
 
                          </div>
                          <div id="fragment-2">
-                              <p>10-day forecast looks great</p>
+                              <div class="row">  <!-- top row latitude and longitude-->
+                                   <h6 id="user-geo"></h6>
+                               </div>
+
+                               <div class="row">
+                                    <img src="" alt="Geo-location map" id="map">
+                               </img>
                          </div>
-                         <div id="fragment-3">
-                              <p>Your geolocation is XYZ</p>
-                              </div>
                          <!-- </div>  tabs div -->
                     </div>  <!-- End of row 2, Column 2-->
 

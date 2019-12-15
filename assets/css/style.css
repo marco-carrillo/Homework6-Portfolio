@@ -1,42 +1,55 @@
 /* File to hold styling for the weather application */
 
-.row-divider{
+.row-divider{           /* divides input search box from results */
     height: 20px;
 }
 
-.search-result{
+.search-result{         /*  formats container that houses prior searches */          
     padding:10px;
     height:40px;
-
 }
 
-.#MyChart{
+.search-result:hover{   /*  when hovering over past results, changes cursor to pointer */
+    cursor:pointer;
+}
+
+.#MyChart{              /*  Will chart 3-hr time forecast */
     width: 400px;
     height: 400px;
 }
 
-.card{
+.card{                  /*  Container that houses 5 days of forecast  */
     width: 8rem;
 }
 
-.card-title{
+.card-title{            /* formats the date of the forecast */
     font-size:12px;
     font-weight: bold;
 }
 
-.card-text{
+.card-text{             /*  formats temperature and humidity of the forecast date */
     font-size:10px;
 }
 
-.main-icon{
-    width:40px;
+#today-header{          /*  formats the city/date of the */
+    font-size:25px;
+    float:left;
 }
 
-.card-img-top {
+.main-icon{             /*  formats the image for current weather forecast */
+    width:80px;
+}
+
+.card-img-top {         /*  formats the images for each of the 5 day forecast */
     width:60px;
     align-self: center;
 }
 
-.weather-items {
+.weather-items {        /*  formats current temperature, humidity, windspeed, UV index */
     font-size:15px;
+}
+
+#map{                   /*  formating map for geolocation  */
+    width:100%;
+    height: auto;
 }

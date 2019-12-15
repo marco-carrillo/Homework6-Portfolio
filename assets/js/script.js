@@ -68,7 +68,7 @@ function displays_results(weather_response){
 
     // Retrieving data points from response
     var data_day=moment().format('MM/DD/YYYY');               // Time of temperatures
-    var data_city=weather_response.name+", "+weather_response.sys.country;  // City returned by API
+    var data_city=weather_response.name+","+weather_response.sys.country;  // City returned by API
     var data_temp=weather_response.main.temp;                 // Temperature
     var data_feels=weather_response.main.feels_like;          // Feels like
     var data_humidity=weather_response.main.humidity;         // Feels like
@@ -76,16 +76,18 @@ function displays_results(weather_response){
     var data_lat=weather_response.coord.lat;                  // Latitude
     var data_lon=weather_response.coord.lon;                  // Longitude
     var data_icon=weather_response.weather[0].icon;           // name of the icon
+    var data_id=weather_response.id;
 
     // Updating header for current weather
-    $("#today-header").text(data_city+" ("+data_day+")");
     var new_img=$("<img>").attr("src","https://openweathermap.org/img/wn/"+data_icon+"@2x.png")
-    new_img.attr("class","main-icon")
+    new_img.attr("class","main-icon");
+    var new_city=$("<p>").attr("id","today-header");
+    new_city.text(data_city+" ("+data_day+")");
     $("#weather-icon").empty();
+    $("#weather-icon").append(new_city);
     $("#weather-icon").append(new_img);
 
-
-    $("#today-temp").text("Current temperature: "+data_temp.toFixed(1)+"°F (feels as "+data_feels.toFixed(1)+"°F)");
+    $("#today-temp").text("Current temperature: "+data_temp.toFixed(2)+"°F (feels as "+data_feels.toFixed(1)+"°F)");
     $("#today-humidity").text("Current humidity: "+data_humidity+"%");
     $("#today-windspeed").text("Current windspeed: "+data_wind);
 
@@ -97,6 +99,35 @@ function displays_results(weather_response){
         $("#today-UVindex").text("UV index: "+UVData.value);
     });
 
+    // Executing the AJAX call for forecasting weather 
+    var ajax_query="http://api.openweathermap.org/data/2.5/forecast?id="+data_id+"&units=imperial&APPID=8f02ab235e3ff57329f8072d90de636e"
+    $.ajax({url: ajax_query,success: displays_forecast, error: display_error})
+
+
+    // if the prior history already has 9 cities, it eliminates the last one (the oldest)
+    // to make room for the newest search entry (located at index 0).  The new one will be added at the top
+    // making the list to have again 10 items which is the max
+
+    if(prior_searches!==null&&prior_searches.indexOf(data_city)===-1) {     // Adds the city only if it is not already in the list
+        if(prior_searches.length>=9){prior_searches.pop()}
+        prior_searches.unshift(data_city);           // Adding a new city to the beginning of the array 
+    } else if(prior_searches!==null) {                  //  The city does exist, so the order needs to be changed
+        var current_position=prior_searches.indexOf(data_city);     // getting the position in the array
+        prior_searches.splice(current_position,1);     // Eliminating the position repeated
+        prior_searches.unshift(data_city);           // Adding a new city to the beginning of the array 
+
+    } else {prior_searches[0]=data_city;}        // list is empty, adding city
+
+    // Refreshing the list of cities
+
+    $("#past-searches").empty()                     // empty the past searches entries
+    for(var i=prior_searches.length;i>0;i--){        // repopulates the past searches
+        AddsCityToHistory(prior_searches[i-1]);
+    }
+
+    // updates local storage
+    localStorage.setItem("prior_searches",JSON.stringify(prior_searches));
+
 }
 
 //********************************************************************************* */
@@ -104,8 +135,16 @@ function displays_results(weather_response){
 //********************************************************************************* */
 
 function display_error(weather_error){
-
-    console.log("error",weather_error)
+    $.confirm({                                                            
+        title: "Invalid city name",
+        content: "We couldn't find that city name in our database.  Please try another name",
+        type: 'red',
+        typeAnimated: true,
+        buttons: {
+            close: function () {
+            }
+        }
+    });
 }
 
 
@@ -128,48 +167,34 @@ function AddsCityToHistory(city_name){
 //********************************************************************************* */
 
 function search_city(){
-// Executing the AJAX call for current weather and current UV index
+    var city_entered=$("#search-city").val();
 
-var ajax_query="http://api.openweathermap.org/data/2.5/weather?q="+$("#search-city").val()+"&units=imperial&APPID=8f02ab235e3ff57329f8072d90de636e"
-$.ajax({url: ajax_query,success: displays_results, error: display_error})
-
-// Executing the AJAX call for forecasting weather 
-var ajax_query="http://api.openweathermap.org/data/2.5/forecast?q="+$("#search-city").val()+"&units=imperial&APPID=8f02ab235e3ff57329f8072d90de636e"
-$.ajax({url: ajax_query,success: displays_forecast, error: display_error})
-
-
-//  Checking whether the city exists in the prior history search or not
-//  if it does, it doesn't add, just brings it to the top of the list
-//  if it does not, it adds at the very beginning.  Index 0 contains the most recent search
-
-var city_entered=$("#search-city").val();
-$("#search-city").val("");
-$("#search-city").focus();
-
-// if the prior history already has 8 cities, it eliminates the last one (the oldest)
-// to make room for the newest search entry (located at index 0).  The new one will be added at the top
-// making the list to have again 10 items which is the max
+    // At least three characters need to be entered
+    if(city_entered.length<3){
+        $.confirm({                                                            
+            title: "Invalid entry",
+            content: "Name has to be at least 3 characters",
+            type: 'red',
+            typeAnimated: true,
+            buttons: {
+                close: function () {
+                }
+            }
+        });
+       return
+    }
 
 
-if(prior_searches!==null&&prior_searches.indexOf(city_entered)===-1) {     // Adds the city only if it is not already in the list
-    if(prior_searches.length>=8){prior_searches.pop()}
-    prior_searches.unshift(city_entered);           // Adding a new city to the beginning of the array 
-} else if(prior_searches!==null) {                  //  The city does exist, so the order needs to be changed
-    var current_position=prior_searches.indexOf(city_entered);     // getting the position in the array
-    prior_searches.splice(current_position,1);     // Eliminating the position repeated
-    prior_searches.unshift(city_entered);           // Adding a new city to the beginning of the array 
+    // Executing the AJAX call for current weather and current UV index
 
-} else {prior_searches[0]=city_entered;}        // list is empty, adding city
+    var ajax_query="http://api.openweathermap.org/data/2.5/weather?q="+$("#search-city").val()+"&units=imperial&APPID=8f02ab235e3ff57329f8072d90de636e"
+    $.ajax({url: ajax_query,success: displays_results, error: display_error})
 
-// Refreshing the list of cities
+    //  Clears the name entered.  It will be substitued by the search result from the API
+    //  If no API result is obtained, it is invalid and will be discarded
 
-$("#past-searches").empty()                     // empty the past searches entries
-for(var i=prior_searches.length;i>0;i--){        // repopulates the past searches
-    AddsCityToHistory(prior_searches[i-1]);
-}
-
-// updates local storage
-localStorage.setItem("prior_searches",JSON.stringify(prior_searches));
+    $("#search-city").val("");
+    $("#search-city").focus();
 
 
 }  // end of function search_city
@@ -186,9 +211,61 @@ function repeat_search(){
 }
 
 
+//******************************************************/
+// The following function gets the user's geolocation  //
+//******************************************************/
+function get_geolocation(){
+
+    if("geolocation" in navigator){
+
+        navigator.geolocation.getCurrentPosition(function(position) {
+           
+            // Displaying hard data on the tab
+            lat_var=position.coords.latitude;
+            lon_var=position.coords.longitude;
+            geo_location="Latitude : "+lat_var.toFixed(2)+", Longitude: "+lon_var.toFixed(2)
+            $("#user-geo").text(geo_location);
+
+            // loading the google map
+
+            // https://maps.googleapis.com/maps/api/staticmap?center=Brooklyn+Bridge,New+York,NY&zoom=13&size=600x300&maptype=roadmap
+            // &markers=color:blue%7Clabel:S%7C40.702147,-74.015794&markers=color:green%7Clabel:G%7C40.711614,-74.012318
+            // &markers=color:red%7Clabel:C%7C40.718217,-73.998284
+            // &key=YOUR_API_KEY
+
+            var website="https://maps.googleapis.com/maps/api/staticmap?center="+lat_var+","+lon_var+"&zoom=12&size=600x350&maptype=hybrid";
+            var markers="&markers=color:blue|label:S|"+lat_var+","+lon_var;
+            var map=website+markers+"&key=AIzaSyBZTex9Yvq35ct_1tG-ftXJvG5KhxfKnI0"
+            console.log(map);
+            $("#map").attr("src",map);           
+
+          })  // navigator.geolocation end of call
+
+    } else {
+        $.confirm({                                                            
+            title: "Geolocation not supported",
+            content: "Unfortunately, Geolocation is not supported in your browser.  Try using another one",
+            type: 'red',
+            typeAnimated: true,
+            buttons: {
+                close: function () {
+                }
+            }
+        });
+
+    } // end of else
+ 
+}  // end of get_geolocation function
+
+
+
 //***************************************************/
 // Main functionality for the weather application   *
 //***************************************************/
+
+var lat_var=0;          // Global variables with latitude values
+var lon_var=0;          // Global variables with longitude values
+get_geolocation();      // finding user's geolocation
 
 var prior_searches=JSON.parse(localStorage.getItem("prior_searches"));   // Retrieves prior cities searched from local storage, 10 max
 var default_city=localStorage.getItem("default_city");       // This is the city for which weather will be obtained by default
@@ -210,3 +287,4 @@ if (prior_searches!==null){
 
 $("#search-city-btn").on("click",search_city);           // Setting click event for search button submission
 $(document).on("click",".search-result",repeat_search);  // Setting click events for prior searches 
+
