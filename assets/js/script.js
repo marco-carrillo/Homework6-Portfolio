@@ -91,14 +91,14 @@ function displays_results(weather_response){
 
     $("#today-temp").text("Current temperature: "+data_temp.toFixed(2)+"°F (feels as "+data_feels.toFixed(1)+"°F)");
     $("#today-humidity").text("Current humidity: "+data_humidity+"%");
-    $("#today-windspeed").text("Current windspeed: "+data_wind);
+    $("#today-windspeed").text("Current windspeed: "+data_wind+" mph");
 
     // making another call to update the UV index
 
     var API_query="http://api.openweathermap.org/data/2.5/uvi?appid=8f02ab235e3ff57329f8072d90de636e&lat="+data_lat+"&lon="+data_lon;
 
     $.ajax({url: API_query,methond: "GET"}).then(function(UVData){
-        $("#today-UVindex").text("UV index: "+UVData.value);
+        $("#today-UVindex").text("UV index: "+UVData.value+" mW/m²");
     });
 
     // Executing the AJAX call for forecasting weather 
@@ -233,7 +233,10 @@ function get_geolocation(){
             var markers="&markers=color:blue|label:S|"+lat_var+","+lon_var;
             var map=website+markers+"&key=AIzaSyBZTex9Yvq35ct_1tG-ftXJvG5KhxfKnI0";
             
-            $("#map").attr("src",map);           
+            // $("#map").attr("src",map);           
+            var new_img=$("<img>").attr("src",map);
+            new_img.attr("id","map-pic");
+            $("#map").append(new_img);
 
           })  // navigator.geolocation end of call
 
