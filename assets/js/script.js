@@ -95,14 +95,14 @@ function displays_results(weather_response){
 
     // making another call to update the UV index
 
-    var API_query="http://api.openweathermap.org/data/2.5/uvi?appid=8f02ab235e3ff57329f8072d90de636e&lat="+data_lat+"&lon="+data_lon;
+    var API_query="https://api.openweathermap.org/data/2.5/uvi?appid=8f02ab235e3ff57329f8072d90de636e&lat="+data_lat+"&lon="+data_lon;
 
     $.ajax({url: API_query,methond: "GET"}).then(function(UVData){
         $("#today-UVindex").text("UV index: "+UVData.value+" mW/m²");
     });
 
     // Executing the AJAX call for forecasting weather 
-    var ajax_query="http://api.openweathermap.org/data/2.5/forecast?id="+data_id+"&units=imperial&APPID=8f02ab235e3ff57329f8072d90de636e"
+    var ajax_query="https://api.openweathermap.org/data/2.5/forecast?id="+data_id+"&units=imperial&APPID=8f02ab235e3ff57329f8072d90de636e"
     $.ajax({url: ajax_query,success: displays_forecast, error: display_error})
 
 
@@ -188,7 +188,7 @@ function search_city(){
 
     // Executing the AJAX call for current weather and current UV index
 
-    var ajax_query="http://api.openweathermap.org/data/2.5/weather?q="+$("#search-city").val()+"&units=imperial&APPID=8f02ab235e3ff57329f8072d90de636e"
+    var ajax_query="https://api.openweathermap.org/data/2.5/weather?q="+$("#search-city").val()+"&units=imperial&APPID=8f02ab235e3ff57329f8072d90de636e"
     $.ajax({url: ajax_query,success: displays_results, error: display_error})
 
     //  Clears the name entered.  It will be substitued by the search result from the API
