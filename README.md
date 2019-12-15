@@ -4,8 +4,7 @@ This application allows users to search current and 5-day weather forecast for a
 
 ## Functionality
 
-#loading
-The first time the application is used, upon loading, it will display the temperature for the city of Richmond.  Subsequently, the system will display the temperature and forecast for the last searched city.  Past searches will be saved to local storage.
+**loading:**  The first time the application is used, upon loading, it will display the temperature for the city of Richmond.  Subsequently, the system will display the temperature and forecast for the last searched city.  Past searches will be saved to local storage.
 
 Upon loading, the application will ask the user if the program can access geolocation.  User can either allow it or block it.  If user allows it, the program will provide the latitude and longitude of the user location, and additionally will provide the picture of a map showing user location.  If the user blocks it the application for accessing its information, the geolocation tab will be empty.
 
