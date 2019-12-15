@@ -1,3 +1,4 @@
+
 //********************************************************************************* */
 // This function will display the 5-day forecasting 
 //********************************************************************************* */
@@ -6,6 +7,7 @@ function displays_forecast(forecast_response){
     var fData=forecast_response.list;
 
     // Setting the date for the next 5 days
+
     var fcst1_day=moment(fData[7].dt_txt,moment.ISO_8601).format('MM/DD/YYYY');
     var fcst2_day=moment(fData[15].dt_txt,moment.ISO_8601).format('MM/DD/YYYY');
     var fcst3_day=moment(fData[23].dt_txt,moment.ISO_8601).format('MM/DD/YYYY');
@@ -147,7 +149,6 @@ function display_error(weather_error){
     });
 }
 
-
 //********************************************************************************* */
 //  Adds the city to the DOM, plus adds it at the top of the past searches strings
 //********************************************************************************* */
@@ -228,15 +229,10 @@ function get_geolocation(){
 
             // loading the google map
 
-            // https://maps.googleapis.com/maps/api/staticmap?center=Brooklyn+Bridge,New+York,NY&zoom=13&size=600x300&maptype=roadmap
-            // &markers=color:blue%7Clabel:S%7C40.702147,-74.015794&markers=color:green%7Clabel:G%7C40.711614,-74.012318
-            // &markers=color:red%7Clabel:C%7C40.718217,-73.998284
-            // &key=YOUR_API_KEY
-
-            var website="https://maps.googleapis.com/maps/api/staticmap?center="+lat_var+","+lon_var+"&zoom=12&size=600x350&maptype=hybrid";
+            var website="https://maps.googleapis.com/maps/api/staticmap?center="+lat_var+","+lon_var+"&zoom=12&size=600x300&maptype=hybrid";
             var markers="&markers=color:blue|label:S|"+lat_var+","+lon_var;
-            var map=website+markers+"&key=AIzaSyBZTex9Yvq35ct_1tG-ftXJvG5KhxfKnI0"
-            console.log(map);
+            var map=website+markers+"&key=AIzaSyBZTex9Yvq35ct_1tG-ftXJvG5KhxfKnI0";
+            
             $("#map").attr("src",map);           
 
           })  // navigator.geolocation end of call
