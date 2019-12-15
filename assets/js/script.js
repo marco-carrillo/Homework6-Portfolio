@@ -279,7 +279,7 @@ if (prior_searches!==null){
     search_city();                                  //  Getting information on weather for last known call
 } else {
     prior_searches=[]
-    $("#search-city").val("Richmond");              //  If not prior searches, it uses Richmond for the first time 
+    $("#search-city").val("Richmond,US");              //  If not prior searches, it uses Richmond for the first time 
     search_city();                                  //  Getting information on weather for last known call
 
 }
